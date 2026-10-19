@@ -1,0 +1,12 @@
+name: Validate deployment images
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: docker compose --env-file .env.example -f infrastructure/docker/compose.prod.yml config --quiet
+    - run: docker compose --env-file .env.example -f infrastructure/docker/compose.prod.yml build
